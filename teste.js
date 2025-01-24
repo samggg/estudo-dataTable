@@ -28,7 +28,6 @@ function createTable(colums, data) {
             .appendTo(headerRow);
     });
 
-    // Adiciona uma coluna oculta para IDs
     $("<th></th>").css("display", "none").appendTo(headerRow);
 
     thead.append(headerRow);
@@ -68,13 +67,9 @@ function putTable() {
         "Cent de Custo Base RH", "ID da viagem", "Justificativa"
     ];
 
-    const linha = [
-        ["99", "2024", "AGOSTO", "SIDIA", "53240612", "FUNDING", "SAMUEL", "ARLINDO", "11126", "11126", "DCJNNUCC93-DD", "INDO PARA O SIDIA"],
-        ["UBER", "2024", "SETEMBRO", "SAMSUNG", "51253009", "GA", "SAMUEL", "MAURO", "11236", "11236", "CEI7328CDCD-2D", "INDO PARA CASA"],
-        ["UBER", "2023", "JULHO", "AMAZON", "12345678", "GA", "ANA", "CARLOS", "11256", "11256", "CEI1234", "INDO PARA O TRABALHO"],
-    ];
+    const linha = [];
 
-    const table = $("<table></table>").attr("id", "exportTable").addClass("display");
+    const table = $("<table></table>").attr("id", "exportTable");
 
     // Cria o cabeçalho
     const thead = $("<thead></thead>");
@@ -157,7 +152,7 @@ function putTable() {
     });
 }
 
-
+//função para mostrar filtro que nem o do Excel
 function showFilterModal(columnIndex, dataTable, iconElement) {
     
     $(".filter-modal").remove();
@@ -226,20 +221,19 @@ function showFilterModal(columnIndex, dataTable, iconElement) {
     modal.append(applyButton);
     $("body").append(modal);
 
-    // Previne o fechamento do modal ao clicar dentro dele
     modal.on('click', function (e) {
         e.stopPropagation();
     });
 }
 
 
-
+//teste - exportar Excel
 function exportTableToCSV(filename) {
     const table = document.getElementById('exportTable');
     const rows = table.querySelectorAll('tr');
     const csv = [];
 
-    // Verifica o separador padrão (vírgula ou ponto e vírgula)
+    
     const separator = navigator.language === 'pt-BR' ? ';' : ',';
 
     // Percorre as linhas da tabela
