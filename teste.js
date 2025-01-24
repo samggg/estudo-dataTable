@@ -47,9 +47,8 @@ function createTable(colums, data) {
                 .appendTo(tr);
         });
 
-        // Adiciona uma célula invisível com o ID único
         $("<td></td>")
-            .text(index) // ID único baseado no índice
+            .text(index)
             .css("display", "none")
             .appendTo(tr);
 
@@ -61,7 +60,7 @@ function createTable(colums, data) {
 }
 
 function putTable() {
-    $("#tableContainer").html(""); // Limpa o container
+    $("#tableContainer").html("");
 
     const colums = [
         "App", "Ano", "Mês", "Nome da Empresa", "Matricula", "Rubrica",
@@ -93,14 +92,13 @@ function putTable() {
             })
             .text(header);
 
-        // Adiciona o ícone de filtro ao lado da coluna
-        const icon = $('<span class="filter-icon" style="cursor: pointer; margin-left: 5px;">&#128269;</span>')
-            .on('click', function (e) {
-                e.stopPropagation(); // Evita o fechamento do modal ao clicar no ícone
+        
+        const icon = $('<span class="filter-icon" style="cursor: pointer; margin-left: 8px;">&#128269;</span>')
+            .on('click', function () {
                 showFilterModal(index, dataTable, $(this));
             });
 
-        th.append(icon); // Adiciona o ícone à célula de header
+        th.append(icon); 
         headerRow.append(th);
     });
     thead.append(headerRow);
@@ -125,14 +123,13 @@ function putTable() {
 
     $("#tableContainer").append(table);
 
-    // Inicializa DataTables
     const dataTable = $("#exportTable").DataTable({
         dom: 'Bfrtip',
         paging: true,
         scroll: "50vh",
         scrollCollapse: true,
         scrollX: true,
-         // Ativa o scroll horizontal na tabela como um todo
+        ordering: false,
         language: {
             lengthMenu: "Mostrar _MENU_ registros por página",
             zeroRecords: "Nenhum registro encontrado",
@@ -147,25 +144,25 @@ function putTable() {
         },
         columnDefs: [
             {
-                targets: "_all", // Aplica o estilo a todas as colunas
-                className: "dt-body-nowrap" // Previne quebras de texto no conteúdo das células
+                targets: "_all",
+                className: "dt-body-nowrap"
             }
         ]
     });
     
 
-    // Fecha o modal ao clicar fora
+    
     $(document).on('click', function () {
-        $(".filter-modal").remove(); // Remove todos os modais
+        $(".filter-modal").remove();
     });
 }
 
-// Função para mostrar o modal de filtros com checkboxes
+
 function showFilterModal(columnIndex, dataTable, iconElement) {
-    // Remove modais existentes antes de abrir um novo
+    
     $(".filter-modal").remove();
 
-    // Cria o modal de filtros
+    
     const modal = $('<div class="filter-modal"></div>').css({
         position: "absolute",
         top: iconElement.offset().top + iconElement.height() + 5,
@@ -179,7 +176,7 @@ function showFilterModal(columnIndex, dataTable, iconElement) {
         width: "7rem"
     });
 
-    // Adiciona checkbox "Selecionar Todos"
+    
     const selectAllCheckbox = $(`
         <label style="display: block; margin: 5px 0; font-size: 11px">
             <input type="checkbox" id="selectAllCheckbox">
@@ -197,10 +194,10 @@ function showFilterModal(columnIndex, dataTable, iconElement) {
         }
     });
     
-    // Insere o "Selecionar Todos" no topo do modal
+    
     modal.append(selectAllCheckbox);
     
-    // Adiciona checkboxes com os valores únicos da coluna
+    
     const column = dataTable.column(columnIndex);
     column.data().unique().sort().each(function (d) {
         const checkbox = $(`
@@ -212,10 +209,8 @@ function showFilterModal(columnIndex, dataTable, iconElement) {
         modal.append(checkbox);
     });
 
-    // Botão para aplicar filtros
     const applyButton = $('<button style="margin-top: 10px; padding: 5px 10px; cursor: pointer;">Filtrar</button>')
-        .on('click', function (e) {
-            e.stopPropagation(); // Evita o fechamento imediato
+        .on('click', function () {
             const selectedValues = [];
             modal.find(".filter-checkbox:checked").each(function () {
                 selectedValues.push($.fn.dataTable.util.escapeRegex($(this).val()));
@@ -225,12 +220,10 @@ function showFilterModal(columnIndex, dataTable, iconElement) {
                 ? `^(${selectedValues.join("|")})$`
                 : "";
             column.search(searchValue, true, false).draw();
-            modal.remove(); // Fecha o modal após aplicar o filtro
+            modal.remove();
         });
 
     modal.append(applyButton);
-
-    // Adiciona o modal ao corpo
     $("body").append(modal);
 
     // Previne o fechamento do modal ao clicar dentro dele
