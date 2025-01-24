@@ -1,0 +1,42 @@
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css');
+
+.filter-modal {
+    width: 200px;
+    font-size: 14px;
+}
+
+.filter-checkbox {
+    margin-right: 5px;
+}
+
+/* Aplica um scroll horizontal dentro das colunas */
+#exportTable th,
+#exportTable td {
+    max-width: 200px;
+    /* Define um tamanho máximo para cada célula */
+    overflow-x: auto;
+    /* Ativa o scroll horizontal */
+    white-space: nowrap;
+    /* Evita quebra de linha */
+}
+
+/* Personaliza a barra de rolagem */
+#exportTable th::-webkit-scrollbar,
+#exportTable td::-webkit-scrollbar {
+    height: 5px;
+    /* Altura da barra de rolagem */
+}
+
+#exportTable th::-webkit-scrollbar-thumb,
+#exportTable td::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    /* Cor da barra de rolagem */
+    border-radius: 10px;
+    /* Borda arredondada */
+}
+
+#exportTable th::-webkit-scrollbar-track,
+#exportTable td::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+    /* Cor do fundo da barra */
+}

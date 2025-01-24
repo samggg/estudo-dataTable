@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtro de Datas</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/markcell/jquery-Tabledit/jquery.tabledit.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="./teste.css">
+
+
+    <script src="./teste.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .form-control {
+            padding: 5px;
+            font-size: 1rem;
+            width: 150px;
+        }
+
+        button {
+            padding: 5px 10px;
+            font-size: 1rem;
+        }
+
+        #tableContainer {
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div>
+        <div class="row">
+            <div>
+                <label for="startDate">Arquivar de:</label>
+                <input type="date" class="form-control" id="startDate">
+            </div>
+            <div>
+                <label for="endDate">Até:</label>
+                <input type="date" class="form-control" id="endDate">
+            </div>
+        </div>
+        <button type="button" id="filterButton">Filtrar</button>
+    </div>
+    <div id="tableContainer"></div>
+    <div id="exportTable"></div>
+    <button type="button" id="exportCSV">Exportação CSV</button>
+</body>
+
+</html>
