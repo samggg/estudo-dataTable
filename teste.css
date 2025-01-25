@@ -1,4 +1,4 @@
-@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css');
+
 
 .filter-modal {
     width: 200px;
@@ -12,23 +12,34 @@
 /*scrool*/
 #exportTable th,
 #exportTable td {
-    max-width: 200px;
-    overflow-x: auto;
+    max-width: 100px;
     white-space: nowrap;
 }
 
-#exportTable th::-webkit-scrollbar,
-#exportTable td::-webkit-scrollbar {
-    height: 3px;
+.filter-modal {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.filter-modal.show {
+    transform: scale(1);
+    opacity: 1;
+}
+.filter-modal.hidden {
+    transform: scale(0.8);
+    opacity: 0;
 }
 
-#exportTable th::-webkit-scrollbar-thumb,
-#exportTable td::-webkit-scrollbar-thumb {
-    background-color: #cccccc;
-    border-radius: 10px;
+#exportTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
 }
 
-#exportTable th::-webkit-scrollbar-track,
-#exportTable td::-webkit-scrollbar-track {
-    background-color: #f4f4f4;
+#exportTable td {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
 }
+
+#exportTable tr:hover {
+    background-color: #f2f2f2;
+}
+

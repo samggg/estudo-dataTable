@@ -1,273 +1,243 @@
-$(document).ready(function () {
-    $("#filterButton").click(function () {
-        putTable();
-    });
+var colums = [
+  "App",
+  "Ano",
+  "Mês",
+  "Nome da Empresa",
+  "Matricula",
+  "Rubrica",
+  "Responsável",
+  "Gerente",
+  "Cod.Cent de Custo",
+  "Cent de Custo Base RH",
+  "ID da viagem",
+  "Justificativa",
+];
 
-    $("#exportCSV").click(function () {
-        exportTableToCSV("exportacao_tabela.csv");
-    });
+var linha = [
+  [
+    "99",
+    "2024",
+    "AGOSTO",
+    "SIDIA INSTITUTO DE TECNOLOGIA",
+    "53240612",
+    "SYSTEMS MANAGEMENT",
+    "SAMUEL MONTEIRO GOMES",
+    "ARLINDO NETO",
+    "11126",
+    "11126",
+    "DCJNNUCC93-DD",
+    "SE DESLOCANDO PARA O SIDIA AMAZON TOWER",
+  ],
+  [
+    "UBER",
+    "2024",
+    "SETEMBRO",
+    "UNIVERSIDADE FEDERAL DO AMAZONAS",
+    "51253009",
+    "GA",
+    "SAMUEL MONTEIRO GOMESS",
+    "MAURO",
+    "11236",
+    "11236",
+    "CEI7328CDCD-2D",
+    "INDO PARA CASA",
+  ],
+  [
+    "UBER",
+    "2023",
+    "JULHO",
+    "AMAZON",
+    "12345678",
+    "GA",
+    "ANA",
+    "CARLOS",
+    "11256",
+    "11256",
+    "CEI1234",
+    "INDO PARA O TRABALHO",
+  ],
+];
+
+$(document).ready(function () {
+  putTable(colums, linha);
+
+  $("#exportCSV").click(function () {
+    exportTableToCSV("exportacao_tabela.csv");
+  });
 });
 
-function createTable(colums, data) {
-    const table = $("<table></table>").attr("id", "exportTable");
-
-    // Adiciona o cabeçalho
-    const thead = $("<thead></thead>");
-    const headerRow = $("<tr></tr>");
-    colums.forEach(header => {
-        $("<th></th>")
-            .text(header)
-            .css({
-                "padding": "1.5rem",
-                "font-size": "12px",
-                "border": '1px solid #f4f4f4',
-                "background-color": "green",
-                "color": "white",
-                "text-align": "center"
-            })
-            .appendTo(headerRow);
-    });
-
-    $("<th></th>").css("display", "none").appendTo(headerRow);
-
-    thead.append(headerRow);
-    table.append(thead);
-
-    // Adiciona o corpo
-    const tbody = $("<tbody></tbody>");
-    data.forEach((row, index) => {
-        const tr = $("<tr></tr>");
-        row.forEach(cell => {
-            $("<td></td>")
-                .text(cell)
-                .css({
-                    "padding": "8px"
-                })
-                .appendTo(tr);
-        });
-
-        $("<td></td>")
-            .text(index)
-            .css("display", "none")
-            .appendTo(tr);
-
-        tbody.append(tr);
-    });
-    table.append(tbody);
-
-    return table;
-}
-
 function putTable() {
-    $("#tableContainer").html("");
+  $("#tableContainer").html("");
 
-    const colums = [
-        "App", "Ano", "Mês", "Nome da Empresa", "Matricula", "Rubrica",
-        "Responsável", "Gerente", "Cod.Cent de Custo", 
-        "Cent de Custo Base RH", "ID da viagem", "Justificativa"
-    ];
+  const table = $("<table></table>").attr("id", "exportTable");
 
-    const linha = [];
+  // Cria o cabeçalho
+  const thead = $("<thead></thead>");
+  const headerRow = $("<tr></tr>");
+  colums.forEach((header, index) => {
+    const th = $("<th></th>")
+      .css({
+        padding: "0.8rem",
+        "font-size": "12px",
+        "background-color": "#5e6b5e",
+        "border-radius": "0 0 5px 5px",
+        "white-space": "nowrap",
+        color: "white",
+        "text-align": "center",
+        position: "relative",
+      })
+      .text(header);
 
-    const table = $("<table></table>").attr("id", "exportTable");
-
-    // Cria o cabeçalho
-    const thead = $("<thead></thead>");
-    const headerRow = $("<tr></tr>");
-    colums.forEach((header, index) => {
-        const th = $("<th></th>")
-            .css({
-                "padding": "1.5rem",
-                "font-size": "12px",
-                "border": '1px solid #f4f4f4',
-                "background-color": "green",
-                "color": "white",
-                "text-align": "center",
-                "position": "relative"
-            })
-            .text(header);
-
-        
-        const icon = $('<span class="filter-icon" style="cursor: pointer; margin-left: 8px;">&#128269;</span>')
-            .on('click', function () {
-                showFilterModal(index, dataTable, $(this));
-            });
-
-        th.append(icon); 
-        headerRow.append(th);
+    const icon = $(
+      '<span class="filter-icon" style="cursor: pointer; margin-left: 8px;"><i class="fi fi-rs-angle-down"></i></span>'
+    ).on("click", function () {
+      showFilterModal(index, dataTable, $(this));
     });
-    thead.append(headerRow);
-    table.append(thead);
 
-    // Cria o corpo
-    const tbody = $("<tbody></tbody>");
-    linha.forEach(row => {
-        const tr = $("<tr></tr>");
-        row.forEach(cell => {
-            $("<td></td>")
-                .text(cell)
-                .css({
-                    "padding": "8px",
-                    "text-align": "center"
-                })
-                .appendTo(tr);
-        });
-        tbody.append(tr);
+    th.append(icon);
+    headerRow.append(th);
+  });
+  thead.append(headerRow);
+  table.append(thead);
+
+  // Cria o corpo
+  const tbody = $("<tbody></tbody>");
+  linha.forEach((row) => {
+    const tr = $("<tr></tr>");
+    row.forEach((cell) => {
+      const td = $("<td></td>").text(cell).css({
+        "padding": "0.6rem",
+        "text-align": "center",
+        "white-space": "nowrap",
+        "overflow": "hidden",
+        "text-overflow": "ellipsis",
+        "max-width": "200px",
+      });
+      if (cell === "99") {
+        td.html(
+          '<img src="99-logo.png" alt="99 Logo" style="width: 50px; height: auto;">'
+        );
+      } else if (cell === "UBER") {
+        td.html(
+          '<img src="uber-logo.png" alt="Uber Logo" style="width: 50px; height: auto;">'
+        );
+      } else {
+        td.text(cell); // Caso contrário, insere o texto normalmente
+      }
+      tr.append(td);
     });
-    table.append(tbody);
+    tbody.append(tr);
+  });
+  table.append(tbody);
 
-    $("#tableContainer").append(table);
+  $("#tableContainer").append(table);
 
-    const dataTable = $("#exportTable").DataTable({
-        dom: 'Bfrtip',
-        paging: true,
-        scroll: "50vh",
-        scrollCollapse: true,
-        scrollX: true,
-        ordering: false,
-        language: {
-            lengthMenu: "Mostrar _MENU_ registros por página",
-            zeroRecords: "Nenhum registro encontrado",
-            info: "Mostrando página _PAGE_ de _PAGES_",
-            search: "Buscar:",
-            paginate: {
-                first: "Primeiro",
-                last: "Último",
-                next: "Próximo",
-                previous: "Anterior"
-            }
-        },
-        columnDefs: [
-            {
-                targets: "_all",
-                className: "dt-body-nowrap"
-            }
-        ]
-    });
-    
-
-    
-    $(document).on('click', function () {
-        $(".filter-modal").remove();
-    });
+  const dataTable = $("#exportTable").DataTable({
+    dom: "Bfrtip",
+    paging: true,
+    scroll: "50vh",
+    scrollCollapse: true,
+    scrollX: true,
+    ordering: false,
+    language: {
+      lengthMenu: "Mostrar _MENU_ registros por página",
+      zeroRecords: "Nenhum registro encontrado",
+      info: "Mostrando página _PAGE_ de _PAGES_",
+      search: "Buscar:",
+      paginate: {
+        first: "Primeiro",
+        last: "Último",
+        next: "Próximo",
+        previous: "Anterior",
+      },
+    },
+    columnDefs: [
+      {
+        className: "dt-body-nowrap",
+        targets: 3, width: "300px" // Exemplo: Coluna "Nome da Empresa".
+      },
+    ],
+  });
 }
 
 //função para mostrar filtro que nem o do Excel
 function showFilterModal(columnIndex, dataTable, iconElement) {
-    
+  const viewModal = $(".filter-modal");
+
+  if (viewModal.length && viewModal.is(":visible")) {
     $(".filter-modal").remove();
+    return;
+  }
 
-    
-    const modal = $('<div class="filter-modal"></div>').css({
-        position: "absolute",
-        top: iconElement.offset().top + iconElement.height() + 5,
-        left: iconElement.offset().left,
-        background: "#fff",
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-        padding: "10px",
-        zIndex: 1000,
-        width: "7rem"
-    });
+  $(".filter-modal").remove();
 
-    
-    const selectAllCheckbox = $(`
+  const modal = $('<div class="filter-modal"></div>').css({
+    position: "absolute",
+    top: iconElement.offset().top + iconElement.height() + 5,
+    left: iconElement.offset().left,
+    "background-color": "#5e6b5e",
+    color: "white",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    padding: "10px",
+    zIndex: 1000,
+    width: "7rem",
+  });
+
+  const selectAllCheckbox = $(`
         <label style="display: block; margin: 5px 0; font-size: 11px">
             <input type="checkbox" id="selectAllCheckbox">
             Selecionar Todos
         </label>
-    `).on('change', function () {
-        if($("#selectAllCheckbox").is(":checked") == true){
-            modal.find("input[type='checkbox']").each(function () {
-                $(this).prop("checked", true);
-            });
-        }else{
-            modal.find("input[type='checkbox']").each(function () {
-                $(this).prop("checked", false);
-            });
-        }
-    });
-    
-    
-    modal.append(selectAllCheckbox);
-    
-    
-    const column = dataTable.column(columnIndex);
-    column.data().unique().sort().each(function (d) {
-        const checkbox = $(`
+    `).on("change", function () {
+    if ($("#selectAllCheckbox").is(":checked") == true) {
+      modal.find("input[type='checkbox']").each(function () {
+        $(this).prop("checked", true);
+      });
+    } else {
+      modal.find("input[type='checkbox']").each(function () {
+        $(this).prop("checked", false);
+      });
+    }
+  });
+
+  modal.append(selectAllCheckbox);
+
+  const column = dataTable.column(columnIndex);
+  column
+    .data()
+    .unique()
+    .sort()
+    .each(function (d) {
+      const checkbox = $(`
             <label style="display: block; margin: 5px 0; font-size: 11px;">
                 <input type="checkbox" value="${d}" class="filter-checkbox">
                 ${d}
             </label>
         `);
-        modal.append(checkbox);
+      modal.append(checkbox);
     });
 
-    const applyButton = $('<button style="margin-top: 10px; padding: 5px 10px; cursor: pointer;">Filtrar</button>')
-        .on('click', function () {
-            const selectedValues = [];
-            modal.find(".filter-checkbox:checked").each(function () {
-                selectedValues.push($.fn.dataTable.util.escapeRegex($(this).val()));
-            });
-
-            const searchValue = selectedValues.length
-                ? `^(${selectedValues.join("|")})$`
-                : "";
-            column.search(searchValue, true, false).draw();
-            modal.remove();
-        });
-
-    modal.append(applyButton);
-    $("body").append(modal);
-
-    modal.on('click', function (e) {
-        e.stopPropagation();
-    });
-}
-
-
-//teste - exportar Excel
-function exportTableToCSV(filename) {
-    const table = document.getElementById('exportTable');
-    const rows = table.querySelectorAll('tr');
-    const csv = [];
-
-    
-    const separator = navigator.language === 'pt-BR' ? ';' : ',';
-
-    // Percorre as linhas da tabela
-    rows.forEach(row => {
-        const cells = Array.from(row.querySelectorAll('th, td'));
-        const rowData = cells.map(cell => {
-            let text = cell.textContent.trim();
-            
-            // Escapa aspas duplas no conteúdo
-            if (text.includes('"')) {
-                text = text.replace(/"/g, '""');
-            }
-
-            // Envolve valores entre aspas duplas
-            return `"${text}"`;
-        });
-        csv.push(rowData.join(separator)); // Junta as células com o separador apropriado
+  const applyButton = $(
+    '<button style="margin-top: 10px; font-weight: bolder; border: 1px solid #f7f7f7; padding: 5px 10px; cursor: pointer; border-radius: 2rem; background-color: white; color:#5e6b5e;">Filtrar</button>'
+  ).on("click", function () {
+    const selectedValues = [];
+    modal.find(".filter-checkbox:checked").each(function () {
+      selectedValues.push($.fn.dataTable.util.escapeRegex($(this).val()));
     });
 
-    // Cria o conteúdo do arquivo CSV
-    const csvContent = csv.join('\r\n'); // Linha por linha separada por "\r\n" para maior compatibilidade
+    const searchValue = selectedValues.length
+      ? `^(${selectedValues.join("|")})$`
+      : "";
+    column.search(searchValue, true, false).draw();
+    modal.remove();
+  });
 
-    // Gera um arquivo Blob no formato CSV
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  modal.append(applyButton);
+  $("body").append(modal);
 
-    // Cria um link de download
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', filename);
-    link.style.display = 'none';
-
-    // Adiciona o link ao documento e dispara o download
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  modal.on("click", function (e) {
+    e.stopPropagation();
+  });
 }
