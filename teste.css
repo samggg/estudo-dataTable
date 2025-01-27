@@ -1,28 +1,16 @@
-
-
-.filter-modal {
-    width: 200px;
-    font-size: 14px;
-}
-
 .filter-checkbox {
     margin-right: 5px;
-}
-
-/*scrool*/
-#exportTable th,
-#exportTable td {
-    max-width: 100px;
-    white-space: nowrap;
 }
 
 .filter-modal {
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
+
 .filter-modal.show {
     transform: scale(1);
     opacity: 1;
 }
+
 .filter-modal.hidden {
     transform: scale(0.8);
     opacity: 0;
@@ -32,10 +20,10 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 12px;
+    table-layout: auto
 }
 
 #exportTable td {
-    padding: 0.5rem;
     border: 1px solid #ddd;
 }
 
@@ -43,3 +31,22 @@
     background-color: #f2f2f2;
 }
 
+.dataTables_scrollHead{
+    border-radius: 3rem;
+    border: 15rem solid #5e6b5e;
+}
+
+.style-button{
+    margin-top: 10px; 
+    font-weight: bold; 
+    border: 1px solid #f7f7f7; 
+    padding: 5px 10px; 
+    cursor: pointer; 
+    border-radius: 2rem; 
+    background-color: white; 
+    color: rgb(0, 0, 0);
+}
+
+.fi{
+    color: yellow;
+}
